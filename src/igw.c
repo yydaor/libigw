@@ -26,6 +26,7 @@
 */
 
 
+#include <string.h>
 #include "igw.h"
 
 #ifdef __cplusplus
@@ -34,10 +35,19 @@
 
 GWcontext_t g_gwContext;
 
-void gwViewport(GWuint w, GWuint h)
+void gwSetViewport(GWuint w, GWuint h)
 {
 	g_gwContext.viewport.width = w;
 	g_gwContext.viewport.height = h;
+}
+
+void gwGetViewport(GWuint *w, GWuint *h)
+{
+	if ( w == NULL || h == NULL)
+		return;
+
+	*w = g_gwContext.viewport.width;
+	*h = g_gwContext.viewport.height;
 }
 
 void gwSetHot(GWuint id)
@@ -61,14 +71,14 @@ void gwUpdateMouseButtonState(GW_MOUSE_BUTTON id, GWuint s)
 	g_gwContext.mouse.button[id] = s;
 }
 
-int gwTestMouseHit(GWfloat x, GWfloat y, GWfloat w, GWfloat h)
+void gwTestMouseHit(GWint *res, GWfloat x, GWfloat y, GWfloat w, GWfloat h)
 {
-	return (
-		g_gwContext.mouse.position.x >= x 		&&
-		g_gwContext.mouse.position.y >= y 		&&
-		g_gwContext.mouse.position.x <= x + w 	&&
-		g_gwContext.mouse.position.y <= y + h
-	);
+	if (res != NULL)
+		*res = (GWint)(
+			g_gwContext.mouse.position.x >= x 		&&
+			g_gwContext.mouse.position.y >= y 		&&
+			g_gwContext.mouse.position.x <= x + w 	&&
+			g_gwContext.mouse.position.y <= y + h);
 }
 
 #ifdef __cplusplus

@@ -44,7 +44,7 @@ struct GWcheckbox_t
 
 typedef struct GWcheckbox_t GWcheckbox_t;
 
-int gwCheckbox(GWcheckbox_t *p);
+GWint gwCheckbox(GWcheckbox_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

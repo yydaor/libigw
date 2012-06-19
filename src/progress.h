@@ -44,7 +44,7 @@ struct GWprogress_t
 
 typedef struct GWprogress_t GWprogress_t;
 
-int gwProgress(GWprogress_t *p);
+GWint gwProgress(GWprogress_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

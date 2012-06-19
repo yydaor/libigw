@@ -35,6 +35,7 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
+
 void gwBegin();
 void gwEnd();
 
@@ -42,9 +43,10 @@ void gwPostRedisplay();
 
 void gwDrawBox(GWfloat x, GWfloat y, GWfloat w, GWfloat h, GWcolor4f_t *col_a, GWcolor4f_t *col_b);
 void gwDrawLine(GWfloat x0, GWfloat y0, GWfloat x1, GWfloat y1, GWcolor4f_t *col);
-void gwDrawText(GWfloat x, GWfloat y, GWcolor4f_t *col, const GWchar *str);
+void gwDrawText(GWfloat x, GWfloat y, GWfloat w, GWfloat h, GWcolor4f_t *col, const GWchar *str);
 
-float gwTextLength(const char *str);
+void gwTextLength(GWfloat *res, const GWchar *str);
+void gwTextHeight(GWfloat *res);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

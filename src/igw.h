@@ -37,19 +37,23 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
+/* GLOBALS */
 extern GWcontext_t g_gwContext;									/* Global context. */
 
-void gwViewport(GWuint w, GWuint h);							/* Setup the viewport. */
+/* FUNCTIONS */
+void gwSetViewport(GWuint w, GWuint h);							/* Set the viewport dimensions. */
+void gwGetViewport(GWuint *w, GWuint *h);						/* Get the viewport dimensions. */
+
 void gwSetHot(GWuint id);										/* Set the id of the hot widget. */
 void gwSetActive(GWuint id);									/* Set the id of the active widget. */
-void gwUpdateMousePosition(GWuint x, GWuint y);					/* Set the mouse position. */
-																/* The input coordinates are expressed in absolute window coordinates. */
-void gwUpdateMouseButtonState(GW_MOUSE_BUTTON id, GWuint s);	/* Set the mouse button state. */
-int	 gwTestMouseHit(GWfloat x, GWfloat y, GWfloat w, GWfloat h);/* Test if the mouse pointer is within the given boundaries. */
-																/* Return values: */
-																/* 1. Yes. */
-																/* 0. No */
 
+void gwPushKey(GWkey k);										/* Push a key id in the key list */
+void gwPopKey(GWkey *k);										/* Pop a key id from the key list */
+void gwUpdateMousePosition(GWuint x, GWuint y);					/* Set the mouse position. */
+void gwUpdateMouseButtonState(GW_MOUSE_BUTTON id, GWuint s);	/* Set the mouse button state. */
+
+void gwTestMouseHit(GWint *res, GWfloat x, GWfloat y,			/* Test if the mouse pointer is within the given boundaries. */
+		 GWfloat w, GWfloat h);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

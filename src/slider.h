@@ -44,7 +44,7 @@ struct GWslider_t
 
 typedef struct GWslider_t GWslider_t;
 
-int gwSlider(GWslider_t *p);
+GWint gwSlider(GWslider_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

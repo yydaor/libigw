@@ -35,47 +35,47 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
-int gwProgress(GWprogress_t *p)
+GWint gwProgress(GWprogress_t *p)
 {
-	int retcode = 0;
+	GWint retcode = 0;
 
 	if (p == NULL)
 		return retcode;
 
-	float ln0x = (float)p->widget.position.x + (float)p->widget.width;
-	float ln0y =  (float)p->widget.position.y + (float)p->widget.height;
+	GWfloat ln0x = (GWfloat)p->widget.position.x + (GWfloat)p->widget.width;
+	GWfloat ln0y = (GWfloat)p->widget.position.y + (GWfloat)p->widget.height;
 	
-	gwDrawBox(	(float)p->widget.position.x, 
-				(float)p->widget.position.y,
-				(float)p->widget.width,
-				(float)p->widget.height,
+	gwDrawBox(	(GWfloat)p->widget.position.x, 
+				(GWfloat)p->widget.position.y,
+				(GWfloat)p->widget.width,
+				(GWfloat)p->widget.height,
 				&(p->widget.color[GW_WIDGET_COLOR_BACKGROUND_A]),
 				&(p->widget.color[GW_WIDGET_COLOR_BACKGROUND_B]));
 
 
-	gwDrawLine(	ln0x, ln0y, (float)p->widget.position.x, ln0y, 
+	gwDrawLine(	ln0x, ln0y, (GWfloat)p->widget.position.x, ln0y, 
 				&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A]));
 
-	gwDrawLine(	ln0x, ln0y, ln0x, (float)p->widget.position.y, 
+	gwDrawLine(	ln0x, ln0y, ln0x, (GWfloat)p->widget.position.y, 
 				&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A]));
 
-	gwDrawLine(	(float)p->widget.position.x, (float)p->widget.position.y,
-				(float)p->widget.position.x, ln0y, 
+	gwDrawLine(	(GWfloat)p->widget.position.x, (GWfloat)p->widget.position.y,
+				(GWfloat)p->widget.position.x, ln0y, 
 				&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B]));
 
-	gwDrawLine(	(float)p->widget.position.x,(float)p->widget.position.y, 
-				ln0x, (float)p->widget.position.y, 
+	gwDrawLine(	(GWfloat)p->widget.position.x,(GWfloat)p->widget.position.y, 
+				ln0x, (GWfloat)p->widget.position.y, 
 				&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B]));
 
 	if (p->value > 0.f) {
-		float hx = (float)p->widget.position.x + 2.f;
-		float hy = (float)p->widget.position.y + 2.f;
-		float hw = (float)p->widget.width * p->value - 3.f;
+		GWfloat hx = (GWfloat)p->widget.position.x + 2.f;
+		GWfloat hy = (GWfloat)p->widget.position.y + 2.f;
+		GWfloat hw = (GWfloat)p->widget.width * p->value - 3.f;
 			  hw = hw > 0.f ? hw : 0.f;
-		float hh = (float)p->widget.height - 3.f;
+		GWfloat hh = (GWfloat)p->widget.height - 3.f;
 
-		float ln1x = hx + hw;
-		float ln1y = hy + hh;
+		GWfloat ln1x = hx + hw;
+		GWfloat ln1y = hy + hh;
 
 		gwDrawBox(	hx, hy,	hw,	hh,
 					&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_A]),

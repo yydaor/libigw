@@ -35,16 +35,20 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
-int gwCheckbox(GWcheckbox_t *p)
+GWint gwCheckbox(GWcheckbox_t *p)
 {
-	int retcode = 0;
+	GWint retcode = 0;
 
 	if (p == NULL)
 		return retcode;
 	
 	/* Check for hot */
-	if (gwTestMouseHit(	(float)p->widget.position.x, (float)p->widget.position.y, 
-						(float)p->widget.width, (float)p->widget.height)) {
+	GWint res = 0;
+
+	gwTestMouseHit(&res, (GWfloat)p->widget.position.x, (GWfloat)p->widget.position.y, 
+		(GWfloat)p->widget.width, (GWfloat)p->widget.height);
+
+	if (res) {
 		g_gwContext.id_hot = p->widget.id;
 
 		/* Check for active */
@@ -60,35 +64,35 @@ int gwCheckbox(GWcheckbox_t *p)
 	/* Draw */
 	if (g_gwContext.id_hot == p->widget.id) {
 		if (g_gwContext.id_active == p->widget.id) { /* Hot, Active */
-			gwDrawBox(	(float)p->widget.position.x, 
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_A_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_A]),
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_B_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_B]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x, 
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));	
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
 			if(p->status) {
@@ -106,35 +110,35 @@ int gwCheckbox(GWcheckbox_t *p)
 			}
 
 		} else { /* Hot, Not active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width, 
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width, 
+						(GWfloat)p->widget.height,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_A_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_A_HOT]),
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_B_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_B_HOT]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height,
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y,
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 	
 			if(p->status) {
@@ -154,35 +158,35 @@ int gwCheckbox(GWcheckbox_t *p)
 
 	} else {
 		if (g_gwContext.id_active == p->widget.id) { /* Not hot, Active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_A_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_A]),
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_B_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_B]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x, 
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
 			if(p->status) {
@@ -200,35 +204,35 @@ int gwCheckbox(GWcheckbox_t *p)
 			}
 
 		} else { /* Not hot, Not active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_A_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_A]),
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BACKGROUND_B_ACTIVE : GW_WIDGET_COLOR_FOREGROUND_B]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_B_ACTIVE : GW_WIDGET_COLOR_BEVEL_B]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[p->status ? GW_WIDGET_COLOR_BEVEL_A_ACTIVE : GW_WIDGET_COLOR_BEVEL_A]));
 
 			if(p->status) {

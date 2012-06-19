@@ -35,16 +35,20 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
-int gwButton(GWbutton_t *p)
+GWint gwButton(GWbutton_t *p)
 {
-	int retcode = 0;
+	GWint retcode = 0;
 
 	if (p == NULL)
 		return retcode;
 	
 	/* Check for hot */
-	if (gwTestMouseHit(	(float)p->widget.position.x, (float)p->widget.position.y, 
-						(float)p->widget.width, (float)p->widget.height)) {
+	GWint res = 0;
+
+	gwTestMouseHit(&res, (GWfloat)p->widget.position.x, (GWfloat)p->widget.position.y, 
+		(GWfloat)p->widget.width, (GWfloat)p->widget.height);
+
+	if (res) {
 		g_gwContext.id_hot = p->widget.id;
 
 		/* Check for active */
@@ -55,152 +59,163 @@ int gwButton(GWbutton_t *p)
 			}
 		}
 	}
+
+	GWfloat len = 0.f;
+	gwTextLength(&len, p->text);
 	
 	/* Draw */
 	if (g_gwContext.id_hot == p->widget.id) {
 		if (g_gwContext.id_active == p->widget.id) { /* Hot, Active */
-			gwDrawBox(	(float)p->widget.position.x, 
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_A_ACTIVE]),
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_B_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x, 
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_ACTIVE]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_ACTIVE]));
-	
-			gwDrawText(	(float)p->widget.position.x + (float)p->widget.width / 2.f - gwTextLength(p->text) / 2.f, 
-						(float)p->widget.position.y + (float)p->widget.height / 2.f,
+
+			gwDrawText(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width / 2.f - len / 2.f, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height / 2.f,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_TEXT_ACTIVE]), p->text);
 
 		} else { /* Hot, Not active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width, 
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width, 
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_A_HOT]),
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_B_HOT]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_HOT]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width, 
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width, 
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_HOT]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_HOT]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y,
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y,
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_HOT]));
 	
-			gwDrawText(	(float)p->widget.position.x + (float)p->widget.width / 2.f - gwTextLength(p->text) / 2.f, 
-						(float)p->widget.position.y + (float)p->widget.height / 2.f,
+			gwDrawText(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width / 2.f - len / 2.f, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height / 2.f,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_TEXT_HOT]), p->text);
 		}
 	} else {
 		if (g_gwContext.id_active == p->widget.id) { /* Not hot, Active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_A_ACTIVE]),
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_B_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x, 
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_ACTIVE]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_ACTIVE]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A_ACTIVE]));
 	
-			gwDrawText(	(float)p->widget.position.x + (float)p->widget.width / 2.f - gwTextLength(p->text) / 2.f, 
-						(float)p->widget.position.y + (float)p->widget.height / 2.f,
+			gwDrawText(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width / 2.f - len / 2.f, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height / 2.f,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_TEXT_HOT]), p->text);
 
 		} else { /* Not hot, Not active */
-			gwDrawBox(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.width,
-						(float)p->widget.height,
+			gwDrawBox(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_A]), 
 						&(p->widget.color[GW_WIDGET_COLOR_FOREGROUND_B]));
 
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B]));
 			
-			gwDrawLine(	(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y + (float)p->widget.height, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_B]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y,
-						(float)p->widget.position.x,
-						(float)p->widget.position.y + (float)p->widget.height, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y,
+						(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A]));
 
-			gwDrawLine(	(float)p->widget.position.x,
-						(float)p->widget.position.y, 
-						(float)p->widget.position.x + (float)p->widget.width,
-						(float)p->widget.position.y, 
+			gwDrawLine(	(GWfloat)p->widget.position.x,
+						(GWfloat)p->widget.position.y, 
+						(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
+						(GWfloat)p->widget.position.y, 
 						&(p->widget.color[GW_WIDGET_COLOR_BEVEL_A]));
 	
-			gwDrawText(	(float)p->widget.position.x + (float)p->widget.width / 2.f - gwTextLength(p->text) / 2.f, 
-						(float)p->widget.position.y + (float)p->widget.height / 2.f,
+			gwDrawText(	(GWfloat)p->widget.position.x + (GWfloat)p->widget.width / 2.f - len / 2.f, 
+						(GWfloat)p->widget.position.y + (GWfloat)p->widget.height / 2.f,
+						(GWfloat)p->widget.width,
+						(GWfloat)p->widget.height,
 						&(p->widget.color[GW_WIDGET_COLOR_TEXT]), p->text);
 		}
 	}

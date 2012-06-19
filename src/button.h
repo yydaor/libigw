@@ -39,12 +39,12 @@
 struct GWbutton_t
 {
 	GWwidget_t widget;
-	char text[512];
+	const GWchar *text;
 };
 
 typedef struct GWbutton_t GWbutton_t;
 
-int gwButton(GWbutton_t *p);
+GWint gwButton(GWbutton_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

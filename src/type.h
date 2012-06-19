@@ -51,6 +51,9 @@ typedef int 			GWint;
 typedef float 			GWfloat;
 typedef double 			GWdouble;
 
+typedef unsigned int	GWkey;
+typedef unsigned int	GWindex;
+
 /* Point types */
 struct GWpoint2ui_t	{ GWuint	x, y; };
 struct GWpoint2i_t	{ GWint		x, y; };

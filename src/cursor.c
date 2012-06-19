@@ -35,7 +35,7 @@
 	extern "C" {
 #endif  /* __cplusplus */
 
-int gwCursor(GWcursor_t *p)
+GWint gwCursor(GWcursor_t *p)
 {
 	if (p == NULL)
 		return 0;
@@ -44,13 +44,13 @@ int gwCursor(GWcursor_t *p)
 	p->widget.position.x = g_gwContext.mouse.position.x;
 	p->widget.position.y = g_gwContext.mouse.position.y;
 
-	float px = (float)p->widget.position.x - (float)p->widget.width;
+	GWfloat px = (GWfloat)p->widget.position.x - (GWfloat)p->widget.width;
 		  px = (px > 0.f ? px : p->widget.position.x);
-	float py = (float)p->widget.position.y - (float)p->widget.height;
+	GWfloat py = (GWfloat)p->widget.position.y - (GWfloat)p->widget.height;
 		  py = (py > 0.f ? py : p->widget.position.y);
-	float nx = (float)p->widget.position.x + (float)p->widget.width;
+	GWfloat nx = (GWfloat)p->widget.position.x + (GWfloat)p->widget.width;
 		  nx = (nx < g_gwContext.viewport.width ? nx : p->widget.position.x);
-	float ny = (float)p->widget.position.y + (float)p->widget.height;
+	GWfloat ny = (GWfloat)p->widget.position.y + (GWfloat)p->widget.height;
 		  ny = (ny < g_gwContext.viewport.height ? ny : p->widget.position.y);
 
 	/* Draw */

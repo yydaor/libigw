@@ -43,7 +43,7 @@ struct GWcursor_t
 
 typedef struct GWcursor_t GWcursor_t;
 
-int gwCursor(GWcursor_t *p);
+GWint gwCursor(GWcursor_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */

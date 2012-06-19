@@ -1,3 +1,29 @@
+/*
+
+	This file is part of libigw.
+
+	callback.c
+	Callbacks
+
+	Copyright (C) 2012
+	Papadopoulos Nikolaos
+
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 3 of the License, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU	Lesser General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General
+	Public License along with this program; if not, write to the
+	Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+	Boston, MA 02110-1301 USA
+
+*/
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -52,6 +78,7 @@ void gwEnd()
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 	glPopAttrib();
+glDisable(GL_SCISSOR_TEST);
 }
 
 void gwPostRedisplay()
@@ -86,21 +113,54 @@ void gwDrawLine(GWfloat x0, GWfloat y0, GWfloat x1, GWfloat y1, GWcolor4f_t *col
 	glEnd();
 }
 
-void gwDrawText(GWfloat x, GWfloat y, GWcolor4f_t *col, const GWchar *str)
+void gwDrawText(GWfloat x, GWfloat y, GWfloat w, GWfloat h, GWcolor4f_t *col, const GWchar *str)
 {
-	if (col == NULL)
+	if (col == NULL || str == NULL)
 		return;
+	
+	glEnable(GL_SCISSOR_TEST);
+
+	/* Note: For scissor testing, the (0, 0) point is bottom left. */
+	GWfloat fh = 0.f;
+	gwTextHeight(&fh);
+	
+	GWfloat ry =  (GWfloat)g_gwContext.viewport.height - y - h + fh;
+	if (ry < 0.f) ry = 0.f;
+
+	glScissor(x, ry, w, h);
 
 	glColor4f(col->r, col->g, col->b, col->a);
+
+	GWfloat lcount = 0.f;
+
 	glRasterPos2f(x, y);
-	while(*str) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *str++);
+
+	while (*str != '\0') {
+		if (*str == '\n') {
+			lcount += 1.f;
+			GWfloat lh = 0.f;
+			gwTextHeight(&lh);
+			glRasterPos2f(x, y + lh * lcount);
+		} else {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, *str);
+		}
+
+		str++;
 	}
+	
+	glDisable(GL_SCISSOR_TEST);
 }
 
-float gwTextLength(const char *str)
+void gwTextLength(GWfloat *res, const GWchar *str)
 {
-	return (float)glutBitmapLength(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)str);
+	if (res != NULL && str != NULL)
+		*res = (GWfloat)glutBitmapLength(GLUT_BITMAP_HELVETICA_12, (const unsigned char*)str);
+}
+
+void gwTextHeight(GWfloat *res)
+{
+	if (res != NULL)
+		*res = 12.f;
 }
 
 #ifdef __cplusplus

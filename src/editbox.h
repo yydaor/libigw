@@ -2,8 +2,8 @@
 
 	This file is part of libigw.
 
-	label.c
-	Label widget
+	editbox.h
+	Editbox widget
 
 	Copyright (C) 2012
 	Papadopoulos Nikolaos
@@ -25,30 +25,29 @@
 
 */
 
-#include <string.h>
+
+#ifndef LIBIGW_EDITBOX_H_INCLUDED
+#define LIBIGW_EDITBOX_H_INCLUDED
+
 #include "type.h"
-#include "callback.h"
-#include "igw.h"
-#include "label.h"
+#include "widget.h"
 
 #ifdef __cplusplus
 	extern "C" {
 #endif  /* __cplusplus */
 
-GWint gwLabel(GWlabel_t *p)
+struct GWeditbox_t
 {
-	if (p == NULL)
-		return 0;
-	
-	/* Draw */
-	gwDrawText(	(GWfloat)p->widget.position.x, (GWfloat)p->widget.position.y,
-				(GWfloat)p->widget.position.x + (GWfloat)p->widget.width,
-				(GWfloat)p->widget.position.y + (GWfloat)p->widget.height,
-				&(p->widget.color[GW_WIDGET_COLOR_TEXT]), p->text);
+	GWwidget_t widget;
+	const GWchar *text;
+};
 
-	return 0;
-}
+typedef struct GWeditbox_t GWeditbox_t;
+
+GWint gwEditbox(GWeditbox_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */
 #endif /* __cplusplus */
+
+#endif /* LIBIGW_EDITBOX_H_INCLUDED */

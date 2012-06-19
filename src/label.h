@@ -39,12 +39,12 @@
 struct GWlabel_t
 {
 	GWwidget_t widget;
-	char text[512];
+	const GWchar *text;
 };
 
 typedef struct GWlabel_t GWlabel_t;
 
-int gwLabel(GWlabel_t *p);
+GWint gwLabel(GWlabel_t *p);
 
 #ifdef __cplusplus
 	}   /* extern "C" */
