@@ -1,0 +1,23 @@
+libigw
+------
+Copyright 2012 (c) Papadopoulos Nikos <nikpapas@gmail.com>
+
+About
+-----
+The Immediate Graphical Widgets library implements the immediate gui concept.
+The library provides the following widgets so far:
+
+* cursor
+* label
+* button
+* slider
+* progress bar
+* checkbox
+* editbox (partially implemented)
+
+The purpose of the library is to be cross-API. Currently only glut is supported 
+but I plan to implement sdl and ncurses support in the future.
+
+Dependencies
+------------
+* glut
